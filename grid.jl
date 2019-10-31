@@ -1,7 +1,7 @@
 #module Grid
 
 # Add libary using
-import Base.Cartesian
+import Base.Iterators
 #export grid, processGrid, addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
@@ -49,19 +49,18 @@ function processGrid(g) # This should turn g into a complete grid structure
     g.max[g.pDims] = g.min[g.pDims] + (g.max[g.pDims]-g.min[g.pDims]) * (1-1/g.pts_each_dim[g.pDims])
 
     #g.vs = Array{Vector{Float64},1}(undef,g.dim)
-    g.vs = Array{Any, 1}(g.dim)
-    g.xs = Array{Any, g.dim}(Tuple(g.pts_each_dim))
+    g.vs = Array{Any, 1}(undef, g.dim)
+    #g.xs = Array{Any, g.dim}(Tuple(g.pts_each_dim))
     # Infer positions in each dimension
     for i = 1:g.dim
         g.vs[i] = collect(range(g.min[i], step = g.dx[i], stop = g.max[i]))
     end
+    g.xs = collect(Iterators.product((range(g.min[i], step = g.dx[i], stop = g.max[i]) for i = 1:g.dim)...))
 
     #
     #for i = 1:g.dim
     #    stuff = zeros(tuple(grid.pts_each_dim ...,))
-    @nloops g.dim i g.xs begin
-        @nref g.dim g.xs i = 0
-    end
+
 
     #end
 
