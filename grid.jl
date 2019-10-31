@@ -46,6 +46,8 @@ function processGrid(g) # This should turn g into a complete grid structure
     # Infer system dimensions
     g.dim = length(g.min)
     g.dx =  (g.max - g.min)./(g.pts_each_dim .- 1.0)
+    g.max[g.pDims] = g.min[g.pDims] + (g.max[g.pDims]-g.min[g.pDims]) * (1-1/g.pts_each_dim[g.pDims])
+
     #g.vs = Array{Vector{Float64},1}(undef,g.dim)
     g.vs = Array{Any, 1}(undef, g.dim)
     # Infer positions in each dimension
@@ -53,14 +55,16 @@ function processGrid(g) # This should turn g into a complete grid structure
         g.vs[i] = collect(range(g.min[i], step = g.dx[i], stop = g.max[i]))
     end
 
-    g.max[g.pDims] = g.min[g.pDims] + (g.max[g.pDims]-g.min[g.pDims]) * (1-1/g.pts_each_dim[g.pDims])
 end
 
-
-
+function makeGrid(gridMin, gridMax, num_g_pts, pDims)
+    g = grid(gridMin, gridMax, num_g_pts, pDims)
+    processGrid(g)
+    return g
+end
 #b = add(2,3)
-c =grid([1,2,3], [4,5,6],[10,10,12],3)
+c = makeGrid([1.0,2,3.0], [4,5,6],[10,10,12],3)
 #c.bdry_f = [add]
-processGrid(c)
+#processGrid(c)
 
 #end
