@@ -1,8 +1,8 @@
-#module Grid
+module Grid
 
 # Add libary using
 import Base.Iterators
-#export grid, processGrid, addGhostPeriodic, addGhostExtrapolate # export module to be used by others
+export grid, processGrid, makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
 function addGhostPeriodic(dataIn, dim, width, towardZero)
@@ -55,14 +55,10 @@ function processGrid(g) # This should turn g into a complete grid structure
     for i = 1:g.dim
         g.vs[i] = collect(range(g.min[i], step = g.dx[i], stop = g.max[i]))
     end
+
+    #Not have to save this at all
     g.xs = collect(Iterators.product((range(g.min[i], step = g.dx[i], stop = g.max[i]) for i = 1:g.dim)...))
 
-    #
-    #for i = 1:g.dim
-    #    stuff = zeros(tuple(grid.pts_each_dim ...,))
-
-
-    #end
 
 end
 
@@ -72,8 +68,8 @@ function makeGrid(gridMin, gridMax, num_g_pts, pDims)
     return g
 end
 #b = add(2,3)
-c = makeGrid([1.0,2,3.0], [4,5,6],[10,10,12],3)
+#c = makeGrid([1.0,2,3.0], [4,5,6],[10,10,12],3)
 #c.bdry_f = [add]
 #processGrid(c)
 
-#end
+end
