@@ -2,7 +2,7 @@ module Grid
 
 # Add libary using
 import Base.Iterators
-export grid, processGrid, makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
+export makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
 function addGhostPeriodic(dataIn, dim, width, towardZero)
@@ -31,7 +31,6 @@ mutable struct grid #Must initialize first 4 elements
     dim::Int
     dx::Vector{Float64}
     vs::Array{Any, 1}
-    xs
 end
 
 # NOTE: g is a mutable struct, hence changes made here are valid
@@ -45,8 +44,8 @@ function processGrid(g) # This should turn g into a complete grid structure
 
     # Infer system dimensions
     g.dim = length(g.min)
-    g.dx =  (g.max - g.min)./(g.pts_each_dim .- 1.0)
     g.max[g.pDims] = g.min[g.pDims] + (g.max[g.pDims]-g.min[g.pDims]) * (1-1/g.pts_each_dim[g.pDims])
+    g.dx =  (g.max - g.min)./(g.pts_each_dim .- 1.0)
 
     #g.vs = Array{Vector{Float64},1}(undef,g.dim)
     g.vs = Array{Any, 1}(undef, g.dim)
@@ -56,9 +55,11 @@ function processGrid(g) # This should turn g into a complete grid structure
         g.vs[i] = collect(range(g.min[i], step = g.dx[i], stop = g.max[i]))
     end
 
-    #Not have to save this at all
-    g.xs = collect(Iterators.product((range(g.min[i], step = g.dx[i], stop = g.max[i]) for i = 1:g.dim)...))
-
+    for i = 1:g.dim
+        broadcast_map = ones(Int,g.dim)
+        broadcast_map[i] = g.pts_each_dim[i]
+        g.vs[i] = reshape(g.vs[i], tuple(broadcast_map...,))
+    end
 
 end
 
@@ -67,9 +68,5 @@ function makeGrid(gridMin, gridMax, num_g_pts, pDims)
     processGrid(g)
     return g
 end
-#b = add(2,3)
-#c = makeGrid([1.0,2,3.0], [4,5,6],[10,10,12],3)
-#c.bdry_f = [add]
-#processGrid(c)
 
 end
