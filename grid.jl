@@ -5,20 +5,6 @@ import Base.Iterators
 export makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
-function addGhostPeriodic(dataIn, dim, width, towardZero)
-    slopeMultiplier = 0
-    if towardZero
-        slopeMultiplier = -1
-    else
-        slopeMultiplier = +1
-    end
-    dims = ndims(dataIn)
-    sizeIn = size(dataIn)
-end
-
-function addGhostExtrapolate()
-
-end
 
 
 mutable struct grid #Must initialize first 4 elements

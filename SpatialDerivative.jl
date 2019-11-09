@@ -1,14 +1,21 @@
 include("./grid.jl")
 include("./BasicShapes.jl")
+include("./BoundaryCondition.jl")
 using .Grid
 using .BasicShapes
+using .BoundaryCondition
 
 
 
 function upwindFirstFirst(grid, data, dim)
     # Will add ghost function later, work on data array
 
-    gdata = data
+    gdata = Array{Float64, grid.dim}(undef, tuple(grid.pts_each_dim...,))
+    if dim != grid.pDims
+        gdata = addGhostExtrapolate(data,dim,1,true)
+    else
+        gdata = addGhostPeriodic(data,dim,1,false)
+    end
 
     sizeData = size(gdata)
     indices1 = Array{Any, 1}(undef, grid.dim)
@@ -22,6 +29,7 @@ function upwindFirstFirst(grid, data, dim)
             indices1[i] = 1:sizeData[i]
             indices2[i] = indices1[i]
         end
+
     end
 
     cartesianInd1 = CartesianIndices(tuple(indices1...,))
@@ -29,6 +37,7 @@ function upwindFirstFirst(grid, data, dim)
 
     dxInv = 1/grid.dx[dim]
     deriv = dxInv*(gdata[cartesianInd1] - gdata[cartesianInd2])
+
 
     # Take leftmost data for left approximation
     indices1[dim] = 1:size(deriv,dim) - 1
