@@ -12,7 +12,7 @@ function upwindFirstFirst(grid, data, dim)
 
     gdata = Array{Float64, grid.dim}(undef, tuple(grid.pts_each_dim...,))
     if dim != grid.pDims
-        gdata = addGhostExtrapolate(data,dim,1,true)
+        gdata = addGhostExtrapolate(data,dim,1,false)
     else
         gdata = addGhostPeriodic(data,dim,1,false)
     end
@@ -55,4 +55,4 @@ end
 
 my_grid = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[41,41,41],3)
 my_data = CyclinderShape(my_grid, 3.0,[0;0;0],1.0)
-l,r = upwindFirstFirst(my_grid, my_data,2)
+l,r = upwindFirstFirst(my_grid, my_data,3)

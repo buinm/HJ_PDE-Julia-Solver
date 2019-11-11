@@ -9,10 +9,10 @@ export addGhostPeriodic, addGhostExtrapolate
 function addGhostExtrapolate(dataIn, dim, width, towardZero)
     slopeMultiplier = 0
     if towardZero
-        println("TowardZero")
+        #println("TowardZero")
         slopeMultiplier = -1
     else
-        println("Not TowardZero")
+        #println("Not TowardZero")
         slopeMultiplier = +1
     end
     dims = ndims(dataIn)
@@ -104,13 +104,13 @@ function addGhostPeriodic(dataIn, dim, width, towardZero)
         indicesIn[i] = 1:sizeIn[i]
     end
     indicesOut = copy(indicesIn)
-    println("I'm here")
+    #println("I'm here")
     # Create sized output array
     sizeOut = copy(sizeIn)
     sizeOut[dim] = sizeIn[dim] + 2*width
     dataOut = zeros(tuple(sizeOut...,))
-    println(size(dataOut))
-    println("I'm here")
+    #println(size(dataOut))
+    #println("I'm here")
 
     # Fill in middle part of dataOut with dataIn
     indicesOut[dim] = width+1:sizeOut[dim] -width
@@ -118,7 +118,7 @@ function addGhostPeriodic(dataIn, dim, width, towardZero)
     dataOut[cartesianIndOut] = dataIn
 #    println(dataOut)
 
-    println("I'm here")
+    #println("I'm here")
 
     # Fill ghost cells
     indicesIn[dim] = (sizeIn[dim]-width+1):sizeIn[dim]
