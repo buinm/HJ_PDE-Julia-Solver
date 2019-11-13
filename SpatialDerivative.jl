@@ -1,3 +1,6 @@
+module SpatialDerivative
+
+
 include("./grid.jl")
 include("./BasicShapes.jl")
 include("./BoundaryCondition.jl")
@@ -5,6 +8,7 @@ using .Grid
 using .BasicShapes
 using .BoundaryCondition
 
+export upwindFirstFirst
 
 
 function upwindFirstFirst(grid, data, dim)
@@ -53,6 +57,8 @@ function upwindFirstFirst(grid, data, dim)
     # Take rightmost data for right approximation
 end
 
-my_grid = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[41,41,41],3)
-my_data = CyclinderShape(my_grid, 3.0,[0;0;0],1.0)
-l,r = upwindFirstFirst(my_grid, my_data,3)
+#my_grid = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[41,41,41],3)
+#my_data = CyclinderShape(my_grid, 3.0,[0;0;0],1.0)
+#l,r = upwindFirstFirst(my_grid, my_data,3)
+
+end

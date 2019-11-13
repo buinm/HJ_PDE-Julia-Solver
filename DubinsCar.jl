@@ -1,4 +1,6 @@
+module DubinsCar
 
+export DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCarOptDstb
 mutable struct properties
     xhist
     yhist
@@ -9,7 +11,7 @@ mutable struct DubinsCar
     speed
     dMax
     dims
-    DubinsCar(x, wmax, speed,dMax,dims) = new(x, wmax, speed, dMax, dims)
+    DubinsCar(x, wMax, speed) = new(x, wMax, speed)
     # Below variables are for book keeping and plotting
     nx          # Number of state dimensions
     nu          # Number of control inputs
@@ -41,4 +43,25 @@ end
 function makeDubinsCar(DubinCar)
 
 end
-a = DubinsCar(5,6,7,8,10)
+#a = DubinsCar(5,6,7,8,10)
+
+function DunbinsCarDynamics(obj, x, u, d)
+
+
+end
+
+function DubinsCarOptCtrl(obj, deriv, uMode)
+    if uMode == "max"
+        uOpt = (deriv[3] .>= 0).*(obj.wMax) + (deriv[3] .< 0).*(-obj.wMax)
+    elseif uMode == "min"
+        uOpt = (deriv[3] .>= 0).*(-obj.wMax) + (deriv[3] .< 0).*(obj.wMax)
+    end
+
+    return uOpt
+end
+
+function DubinsCarOptDstb()
+
+end
+
+end
