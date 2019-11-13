@@ -1,5 +1,6 @@
-module DubinsCar
+include("./grid.jl")
 
+using .Grid
 export DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCarOptDstb
 mutable struct properties
     xhist
@@ -40,14 +41,34 @@ mutable struct DubinsCar
 
 end
 
-function makeDubinsCar(DubinCar)
+function makeDubinsCar(x,wMax, speed, )
+    # Some basic vehicle properties
+
+    obj.dims = [1;2;3]
+    obj.pdim = [1;2]
+    obj.hdim = [3]
+    obj.nx = 3
+    obj.nu = 1
+    obj.nd = 3
+
+    obj.xhist = obj.x
 
 end
-#a = DubinsCar(5,6,7,8,10)
 
-function DunbinsCarDynamics(obj, x, u, d)
+function DunbinsCarDynamics(obj, grid, u, d)]
+    if d == 0 # not using disturbance for now
+        d = [0;0;0]
+    end
+    data = zeros(tuple(grid.pts_each_dim ...,))
 
+    # dx is a cell here
+    dx = Array{Any, 1}(undef, 3)
+    # Broadcasting using data dimensions
+    dx[1] = data .+ (obj.speed .* cos.(grid.vs[1]) .+ d[1])
+    dx[2] = data .+ (obj.speed .* sin.(grid.vs[2]) .+ d[2])
+    dx[3] = u .+ d[3]
 
+    return dx
 end
 
 function DubinsCarOptCtrl(obj, deriv, uMode)
@@ -61,7 +82,5 @@ function DubinsCarOptCtrl(obj, deriv, uMode)
 end
 
 function DubinsCarOptDstb()
-
-end
 
 end
