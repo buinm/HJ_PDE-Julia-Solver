@@ -1,18 +1,22 @@
+module DubinsCar
+
 include("./grid.jl")
+include("./BasicShapes.jl")
+include("./SpatialDerivative.jl")
 
 using .Grid
-export DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCarOptDstb
-mutable struct properties
-    xhist
-    yhist
-end
-mutable struct DubinsCar
+using .BasicShapes
+using .SpatialDerivative
+
+export dubinsCar, makeDubinsCar, DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCarOptDstb
+
+mutable struct dubinsCar
     x
     wMax
     speed
     dMax
+    dubinsCar(x, wMax, speed, dMax) = new(x, wMax, speed, dMax)
     dims
-    DubinsCar(x, wMax, speed) = new(x, wMax, speed)
     # Below variables are for book keeping and plotting
     nx          # Number of state dimensions
     nu          # Number of control inputs
@@ -38,12 +42,11 @@ mutable struct DubinsCar
     hpvhist
     # Data (any data that one may want to store for convenience)
     data
-
 end
 
-function makeDubinsCar(x,wMax, speed, )
+function makeDubinsCar(x,wMax, speed, dMax)
     # Some basic vehicle properties
-
+    obj = dubinsCar(x,wMax, speed, dMax)
     obj.dims = [1;2;3]
     obj.pdim = [1;2]
     obj.hdim = [3]
@@ -53,12 +56,10 @@ function makeDubinsCar(x,wMax, speed, )
 
     obj.xhist = obj.x
 
+    return obj
 end
 
-function DunbinsCarDynamics(obj, grid, u, d)]
-    if d == 0 # not using disturbance for now
-        d = [0;0;0]
-    end
+function DunbinsCarDynamics(obj, grid, u, d)
     data = zeros(tuple(grid.pts_each_dim ...,))
 
     # dx is a cell here
@@ -77,10 +78,21 @@ function DubinsCarOptCtrl(obj, deriv, uMode)
     elseif uMode == "min"
         uOpt = (deriv[3] .>= 0).*(-obj.wMax) + (deriv[3] .< 0).*(obj.wMax)
     end
-
     return uOpt
 end
 
-function DubinsCarOptDstb()
+function DubinsCarOptDstb(obj, deriv, dMode)
+    dOpt = Array{Any, 1}(undef, obj.nd)
+    if dMode == "max"
+        for i=1:3
+            dOpt[i] = (deriv[i] .>= 0).*(obj.dMax[i]) + (deriv[i] .< 0).*(-obj.dMax[i])
+        end
+    elseif dMode == "min"
+        for i = 1:3
+            dOpt[i] = (deriv[i] .>= 0).*(-obj.dMax[i]) + (deriv[i] .< 0).*(obj.dMax[i])
+        end
+    end
+    return dOpt
+end
 
 end

@@ -2,7 +2,7 @@ module Grid
 
 # Add libary using
 import Base.Iterators
-export makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
+export grid, makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
 
