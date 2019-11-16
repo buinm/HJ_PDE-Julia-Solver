@@ -11,13 +11,14 @@ function genericPartial(t, data, derivMin, derivMax, schemeData, dim)
 
     # Calculate disturbance
     dU = DubinsCarOptDstb(schemeData.obj, derivMax, schemeData.dMode)
-    dL = DubinsCarOptCtrl(schemeData.obj, derivMin, schemeData.dMode)
+    dL = DubinsCarOptDstb(schemeData.obj, derivMin, schemeData.dMode)
 
     # Compute alpha
     dxUU = DunbinsCarDynamics(schemeData.obj, schemeData.MyGrid, uU, dU)
-    dxUL = DunbinsCarDynamics(schemeData.obj, schemeData.MyGrid, uU, dL)
     dxLL = DunbinsCarDynamics(schemeData.obj, schemeData.MyGrid, uL, dL)
     dxLU = DunbinsCarDynamics(schemeData.obj, schemeData.MyGrid, uL, dU)
+    dxUL = DunbinsCarDynamics(schemeData.obj, schemeData.MyGrid, uU, dL)
+
 
     alpha = max.(abs.(dxUU[dim]), abs.(dxUL[dim]), abs.(dxLL[dim]), abs.(dxLU[dim]))
     return alpha

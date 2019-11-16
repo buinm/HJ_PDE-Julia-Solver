@@ -1,5 +1,6 @@
 include("./genericHam.jl")
 include("./SpatialDerivative.jl")
+include("./artificialDissipationGLF.jl")
 
 using .SpatialDerivative
 
@@ -18,15 +19,15 @@ function termLaxFriedrichs(t,y, schemeData)
     end
 
     # TODO: implement these functions :)
-    Ham = genericHam(t, data, derivC, schemeData)
-    """diss, stepBound = artificialDissipationGFL(t, data, derivL, derivR, g, obj)
+    ham = genericHam(t, data, derivC, schemeData)
+    diss, stepBound = artificialDissipationGFL(t, data, derivL, derivR, schemeData)
 
     # (unstable) analytic Ham - disspative stabilization
     delta = ham - diss
 
     ydot = -delta
 
-    return ydot, stepBound """
+    return ydot, stepBound
 
-    return Ham
+    #return Ham
 end

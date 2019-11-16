@@ -21,4 +21,4 @@ my_car = makeDubinsCar([0.0,0.0,0.0],1.0, 1.0, [0,0,0])
 my_data = CyclinderShape(g, 3.0,[0;0;0],1.0)
 myScheme = SchemeData(MyGrid = g, obj=my_car)
 
-ham_value = termLaxFriedrichs(2, my_data,myScheme)
+ham, burger = termLaxFriedrichs(2, my_data,myScheme)
