@@ -60,14 +60,14 @@ function makeDubinsCar(x,wMax, speed, dMax)
 end
 
 function DunbinsCarDynamics(obj, grid, u, d)
-    data = zeros(tuple(grid.pts_each_dim ...,))
+    #data = zeros(tuple(grid.pts_each_dim ...,))
 
     # dx is a cell here
     dx = Array{Any, 1}(undef, 3)
     # Broadcasting using data dimensions
-    dx[1] = data .+ (obj.speed .* cos.(grid.vs[1]) .+ d[1])
-    dx[2] = data .+ (obj.speed .* sin.(grid.vs[2]) .+ d[2])
-    println(size(dx[2]))
+    dx[1] = (obj.speed .* cos.(grid.vs[3]) .+ d[1])
+    dx[2] = (obj.speed .* sin.(grid.vs[3]) .+ d[2])
+    #println(size(dx[2]))
     dx[3] = u .+ d[3]
 
     return dx

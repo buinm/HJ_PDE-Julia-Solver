@@ -21,7 +21,6 @@ function addGhostExtrapolate(dataIn, dim, width, towardZero)
     for k = 1:dims
         sizeIn[k] = my_size[k]
     end
-    println(sizeIn)
 
     indicesIn = Array{Any, 1}(undef, dims)
     indicesOut = Array{Any, 1}(undef, dims)
