@@ -1,7 +1,8 @@
-include("./grid.jl")
-include("./DubinsCar.jl")
-include("./BasicShapes.jl")
-include("./termLaxFriedrichs.jl")
+include("../grid.jl")
+include("../DubinsCar.jl")
+include("../BasicShapes.jl")
+include("./odeCFL1.jl")
+#include("../termLaxFriedrichs.jl")
 
 using .Grid
 using .DubinsCar
@@ -33,7 +34,7 @@ myScheme = SchemeData(MyGrid = g, obj=my_car)
 
 #t, V = odeCFL1([0.5, 0.75], my_data,myScheme)
 
-# Main loop to compute value function V(x,t)
+"""# Main loop to compute value function V(x,t)
 start = 2
 small = 1e-4
 global count = 0
@@ -52,4 +53,9 @@ for i = start:length(tau)
         count = count +1
     end
 end
-println(count)
+println(count)"""
+
+
+V_function = copy(my_data)
+println(V_function[1,1,1])
+result = odeCFL1(3, V_function, myScheme)
