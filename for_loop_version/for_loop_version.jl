@@ -4,10 +4,12 @@ include("../BasicShapes.jl")
 include("./odeCFL1.jl")
 #include("../termLaxFriedrichs.jl")
 
-using .Grid
-using .DubinsCar
-using .BasicShapes
+#using .Grid
+#using .DubinsCar
+#using .BasicShapes
 using Parameters
+using GR
+
 
 @with_kw mutable struct SchemeData
     MyGrid::grid
@@ -19,12 +21,12 @@ end
 
 # Specify time vector
 t0 = 0
-tMax = 4
+tMax = 1.0
 dt = 0.05
 tau = t0:dt:tMax
 
 # Give me a grid to hold data
-g = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[41,41,41],3)
+g = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[100,100,100],3)
 # Dynamics system ~~~ Dubins Car
 my_car = makeDubinsCar([0.0,0.0,0.0],1.0, 1.0, [0,0,0])
 #   Target set
@@ -34,7 +36,8 @@ myScheme = SchemeData(MyGrid = g, obj=my_car)
 
 #t, V = odeCFL1([0.5, 0.75], my_data,myScheme)
 
-"""# Main loop to compute value function V(x,t)
+# Main loop to compute value function V(x,t)
+
 start = 2
 small = 1e-4
 global count = 0
@@ -53,9 +56,6 @@ for i = start:length(tau)
         count = count +1
     end
 end
-println(count)"""
+println(count)
 
-
-V_function = copy(my_data)
-println(V_function[1,1,1])
-result = odeCFL1(3, V_function, myScheme)
+isosurface(V_function, isovalue=0)

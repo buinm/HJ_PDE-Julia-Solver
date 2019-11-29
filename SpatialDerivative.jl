@@ -1,12 +1,12 @@
-module SpatialDerivative
+#module SpatialDerivative
 
 
 include("./grid.jl")
 include("./BasicShapes.jl")
 include("./BoundaryCondition.jl")
-using .Grid
-using .BasicShapes
-using .BoundaryCondition
+#using .Grid
+#using .BasicShapes
+#using .BoundaryCondition
 
 export upwindFirstFirst
 
@@ -61,4 +61,4 @@ end
 #my_data = CyclinderShape(my_grid, 3.0,[0;0;0],1.0)
 #l,r = upwindFirstFirst(my_grid, my_data,3)
 
-end
+#end

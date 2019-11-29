@@ -1,6 +1,6 @@
 include("./DubinsCar.jl")
 
-using .DubinsCar
+#using .DubinsCar
 function genericPartial(t, data, derivMin, derivMax, schemeData, dim)
     g = schemeData.MyGrid
     dynSys = schemeData.obj

@@ -1,8 +1,8 @@
-module Grid
+#module Grid
 
 # Add libary using
 import Base.Iterators
-export grid, makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
+#export grid, makeGrid#addGhostPeriodic, addGhostExtrapolate # export module to be used by others
 
 # TODO: implement these 2 below functions (or maybe include it from another files?)
 
@@ -55,4 +55,4 @@ function makeGrid(gridMin, gridMax, num_g_pts, pDims)
     return g
 end
 
-end
+#end

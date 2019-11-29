@@ -1,7 +1,7 @@
-module BoundaryCondition
+#module BoundaryCondition
 
 include("./grid.jl")
-using .Grid
+#using .Grid
 
 export addGhostPeriodic, addGhostExtrapolate
 
@@ -139,4 +139,4 @@ function addGhostPeriodic(dataIn, dim, width, towardZero)
 
 end
 
-end
+#end

@@ -1,12 +1,12 @@
-module DubinsCar
+#module DubinsCar
 
 include("./grid.jl")
 include("./BasicShapes.jl")
 include("./SpatialDerivative.jl")
 
-using .Grid
-using .BasicShapes
-using .SpatialDerivative
+#using .Grid
+#using .BasicShapes
+#using .SpatialDerivative
 
 export dubinsCar, makeDubinsCar, DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCarOptDstb
 
@@ -96,4 +96,4 @@ function DubinsCarOptDstb(obj, deriv, dMode)
     return dOpt
 end
 
-end
+#end
