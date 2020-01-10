@@ -12,8 +12,8 @@ export dubinsCar, makeDubinsCar, DunbinsCarDynamics, DubinsCarOptCtrl, DubinsCar
 
 mutable struct dubinsCar
     x
-    wMax
-    speed
+    wMax::Float64
+    speed::Float64
     dMax
     dubinsCar(x, wMax, speed, dMax) = new(x, wMax, speed, dMax)
     dims
