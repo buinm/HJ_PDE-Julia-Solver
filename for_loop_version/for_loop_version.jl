@@ -34,7 +34,6 @@ function odeCFL1()
 
     # initialize memory here
     result = Array{Float64, 3}(undef, myScheme.MyGrid.pts_each_dim[1],myScheme.MyGrid.pts_each_dim[2],myScheme.MyGrid.pts_each_dim[3])
-    debug_grad  = Array{Float64, 3}(undef, myScheme.MyGrid.pts_each_dim[1],myScheme.MyGrid.pts_each_dim[2],myScheme.MyGrid.pts_each_dim[3])
     derivDiff1 = Array{Float64, 3}(undef, myScheme.MyGrid.pts_each_dim[1],myScheme.MyGrid.pts_each_dim[2],myScheme.MyGrid.pts_each_dim[3])
     derivDiff2 = Array{Float64, 3}(undef, myScheme.MyGrid.pts_each_dim[1],myScheme.MyGrid.pts_each_dim[2],myScheme.MyGrid.pts_each_dim[3])
     derivDiff3 = Array{Float64, 3}(undef, myScheme.MyGrid.pts_each_dim[1],myScheme.MyGrid.pts_each_dim[2],myScheme.MyGrid.pts_each_dim[3])
@@ -48,7 +47,7 @@ function odeCFL1()
         tNow = tau[i-1]
         while tNow < tau[i] - 1e-4
             @time begin
-            new_result = odeCFL1([tNow, tau[i]], V_function, myScheme, result, derivDiff1, derivDiff2, derivDiff3, debug_grad)
+            new_result = odeCFL1([tNow, tau[i]], V_function, myScheme, result, derivDiff1, derivDiff2, derivDiff3)
             end
             tNow = new_result[1]
             V_function = new_result[2]

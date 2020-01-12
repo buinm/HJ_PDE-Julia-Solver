@@ -42,7 +42,7 @@ function spatial_Derivative(grids, index ,data_array, dim)
     end
 end
 
-function odeCFL1(tspan, V_function, myScheme, result, derivDiff1, derivDiff2, derivDiff3, debug_grad)
+function odeCFL1(tspan, V_function, myScheme, result, derivDiff1, derivDiff2, derivDiff3)
     # Variables to keep track of the max and min derivative
     min_deriv_1 = 1e9
     min_deriv_2 = 1e9
