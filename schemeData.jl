@@ -34,7 +34,7 @@ dt = 0.05
 tau = t0:dt:tMax
 
 # Give me a grid to hold data
-g = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[40,40,40],3)
+g = makeGrid([-5.0,-5.0,-pi], [5,5,pi],[100,100,100],3)
 # Dynamics system ~~~ Dubins Car
 my_car = makeDubinsCar([0.0,0.0,0.0],1.0, 1.0, [0,0,0])
 #   Target set
